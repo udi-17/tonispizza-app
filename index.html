@@ -10,15 +10,31 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="פיצה טוני'ס">
-    <meta name="description" content="פיצה טוני'ס - פיצה איכותית עם משלוח חינם מעל 60 ש״ח">
+    <meta name="description" content="פיצה טוני'ס בפתח תקווה – פיצה טרייה, פסטות, סלטים, מאפים וקינוחים. משלוח חינם מעל 60 ש"ח. התקשרו 03-6008820.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="he_IL">
+    <meta property="og:title" content="פיצה טוני'ס - הזמנות אונליין">
+    <meta property="og:description" content="פיצה טרייה ואיכותית, משלוחים מהירים, התקשרו 03-6008820.">
+    <meta property="og:url" content="/">
+    <meta property="og:image" content="/icon-512x512.PNG.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="פיצה טוני'ס - הזמנות אונליין">
+    <meta name="twitter:description" content="פיצה טרייה ואיכותית בפתח תקווה. משלוח חינם מעל 60 ש"ח.">
+    <meta name="twitter:image" content="/icon-512x512.PNG.png">
     
     <!-- Manifest -->
     <link rel="manifest" href="manifest.json">
     
-    <!-- iOS Icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16x16.png">
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="152x152" href="/icon-152x152.PNG.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/icon-96x96.PNG.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192x192.PNG.png">
     
     <style>
         * {
@@ -145,6 +161,12 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+        .map-wrapper {
+            margin-top: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
         
         .app-download {
             background: rgba(255, 255, 255, 0.95);
@@ -194,6 +216,24 @@
             box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
             display: none;
             z-index: 1000;
+        }
+
+        .whatsapp-fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25D366;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-decoration: none;
         }
         
         @media (max-width: 768px) {
@@ -275,6 +315,17 @@
             <p>ראשון עד רביעי: 08:00 - 00:00</p>
             <p>חמישי: 12:00 - 03:00</p>
             <p>מוצאי שבת: חצי שעה אחרי צאת השבת עד 03:00</p>
+            <div id="location" class="map-wrapper">
+                <iframe
+                    src="https://www.google.com/maps?q=קלישר%2017,%20פתח%20תקווה&z=16&output=embed"
+                    width="100%"
+                    height="320"
+                    style="border:0;"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen>
+                </iframe>
+            </div>
         </div>
         
         <div class="app-download">
@@ -297,8 +348,43 @@
     <div id="installPrompt" class="install-prompt">
         📱 הוסף למסך הבית
     </div>
+    <a class="whatsapp-fab" aria-label="צ'אט בוואטסאפ" target="_blank" href="https://wa.me/97236008820?text=%D4%97%D7%99%D7%95%D7%9D%20%D7%98%D7%95%D7%91,%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%94%D7%96%D7%9E%D7%99%D7%9F%20%D7%A4%D7%99%D7%A6%D7%94%20%D7%9C%D7%9B%D7%9F">
+        🟢
+    </a>
     
     <script>
+        // JSON-LD Business Schema
+        const restaurantSchema = {
+            "@context": "https://schema.org",
+            "@type": "Restaurant",
+            "name": "Tony's Pizza & Pasta",
+            "image": "/icon-512x512.PNG.png",
+            "url": "/",
+            "telephone": "+972-3-6008820",
+            "servesCuisine": ["Pizza", "Pasta", "Vegetarian"],
+            "priceRange": "₪₪",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "קלישר 17",
+                "addressLocality": "פתח תקווה",
+                "addressCountry": "IL"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 32.0863,
+                "longitude": 34.8878
+            },
+            "openingHoursSpecification": [
+                {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday"], "opens": "08:00", "closes": "24:00"},
+                {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Thursday"], "opens": "12:00", "closes": "03:00"},
+                {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "20:00", "closes": "03:00"}
+            ],
+            "sameAs": []
+        };
+        const ld = document.createElement('script');
+        ld.type = 'application/ld+json';
+        ld.text = JSON.stringify(restaurantSchema);
+        document.head.appendChild(ld);
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {

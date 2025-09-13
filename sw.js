@@ -3,8 +3,8 @@ const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  '/icon-192x192.PNG.png',
+  '/icon-512x512.PNG.png'
 ];
 
 // Install event
@@ -52,8 +52,8 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('push', (event) => {
   const options = {
     body: event.data ? event.data.text() : 'הזמנה חדשה מחכה לך!',
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/icon-72x72.png',
+    icon: '/icon-192x192.PNG.png',
+    badge: '/icon-72x72.PNG.png',
     dir: 'rtl',
     lang: 'he',
     tag: 'pizza-notification',
@@ -62,7 +62,7 @@ self.addEventListener('push', (event) => {
       {
         action: 'view',
         title: 'צפייה',
-        icon: '/icons/icon-96x96.png'
+        icon: '/icon-96x96.PNG.png'
       },
       {
         action: 'close',
