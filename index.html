@@ -274,6 +274,14 @@
                     <input id="customerPhone" type="tel" placeholder="טלפון" />
                     <input id="customerAddress" type="text" placeholder="כתובת למשלוח" />
                     <textarea id="orderNotes" rows="2" placeholder="הערות להזמנה (לא חובה)"></textarea>
+                    <select id="paymentMethod">
+                        <option value="whatsapp">תשלום במזומן/טלפון (ווטסאפ)</option>
+                        <option value="paypal">תשלום אונליין (PayPal)</option>
+                    </select>
+                    <div id="paypalContainer" style="display:none;">
+                        <div id="paypalButtons"></div>
+                        <div style="color:#6b7280;font-size:.9em;margin-top:6px;">התשלום מעובד ע"י PayPal</div>
+                    </div>
                     <button id="placeOrder" class="submit" disabled>שלח הזמנה בווטסאפ</button>
                 </div>
             </aside>
@@ -306,6 +314,10 @@
         const RESTAURANT = {
             tel: '03-6008820', // עדכן לפי הצורך
             whatsappInternational: '972500000000' // עדכן למספר עם קידומת 972 וללא מקפים/רווחים
+        };
+
+        const PAYMENTS = {
+            paypalClientId: 'REPLACE_WITH_YOUR_PAYPAL_CLIENT_ID'
         };
 
         // ====== MENU DATA ======
@@ -363,6 +375,14 @@
             localStorage.setItem('burger_order_cart_v1', JSON.stringify(cart));
             renderCart();
         };
+
+        function getTotals() {
+            const subtotal = cart.reduce((sum, ci) => sum + (ci.unitPrice * ci.quantity), 0);
+            const needsDelivery = (el('fulfillment').value === 'delivery');
+            const delivery = (needsDelivery && subtotal > 0 && subtotal < PRICES.freeDeliveryAbove) ? PRICES.deliveryFee : 0;
+            const total = subtotal + delivery;
+            return { subtotal, delivery, total };
+        }
 
         function computeCustomPrice(basePrice, opts) {
             let price = basePrice;
@@ -581,17 +601,22 @@
                 list.appendChild(li);
             });
 
-            const delivery = (el('fulfillment').value === 'delivery' && subtotal > 0 && subtotal < PRICES.freeDeliveryAbove) ? PRICES.deliveryFee : 0;
-            el('subtotal').textContent = formatCurrency(subtotal);
+            const { subtotal: s, delivery, total } = getTotals();
+            el('subtotal').textContent = formatCurrency(s);
             el('deliveryFee').textContent = formatCurrency(delivery);
-            el('grandTotal').textContent = formatCurrency(subtotal + delivery);
+            el('grandTotal').textContent = formatCurrency(total);
 
             list.querySelectorAll('button[data-inc]').forEach(b => b.onclick = () => { cart[b.getAttribute('data-inc')].quantity++; saveCart(); });
             list.querySelectorAll('button[data-dec]').forEach(b => b.onclick = () => { const i = b.getAttribute('data-dec'); cart[i].quantity = Math.max(1, cart[i].quantity - 1); saveCart(); });
             list.querySelectorAll('button[data-del]').forEach(b => b.onclick = () => { cart.splice(b.getAttribute('data-del'), 1); saveCart(); });
 
             // enable/disable order button
-            el('placeOrder').disabled = cart.length === 0 || !el('customerName').value || !el('customerPhone').value || (el('fulfillment').value==='delivery' && !el('customerAddress').value);
+            const formValid = cart.length > 0 && !!el('customerName').value && !!el('customerPhone').value && (el('fulfillment').value!=='delivery' || !!el('customerAddress').value);
+            const method = el('paymentMethod').value;
+            el('placeOrder').style.display = method === 'whatsapp' ? '' : 'none';
+            el('paypalContainer').style.display = method === 'paypal' ? '' : 'none';
+            el('placeOrder').disabled = !formValid;
+            if (method === 'paypal') ensurePayPalButtons(formValid);
         }
 
         function buildOrderText() {
@@ -626,12 +651,72 @@
                 el('customerAddress').disabled = !isDelivery;
                 renderCart();
             });
-            ['customerName','customerPhone','customerAddress'].forEach(id => el(id).addEventListener('input', renderCart));
+            ['customerName','customerPhone','customerAddress','paymentMethod'].forEach(id => el(id).addEventListener('input', renderCart));
             el('placeOrder').addEventListener('click', () => {
                 const text = buildOrderText();
                 const url = `https://wa.me/${RESTAURANT.whatsappInternational}?text=${encodeURIComponent(text)}`;
                 window.open(url, '_blank');
             });
+        }
+
+        // ====== PAYPAL ======
+        let paypalSdkLoaded = false;
+        let paypalButtonsInstance = null;
+
+        function loadPayPalSdk() {
+            return new Promise((resolve, reject) => {
+                if (paypalSdkLoaded) return resolve();
+                if (!PAYMENTS.paypalClientId || PAYMENTS.paypalClientId.startsWith('REPLACE_')) {
+                    console.warn('PAYPAL CLIENT ID not configured');
+                }
+                const s = document.createElement('script');
+                s.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(PAYMENTS.paypalClientId)}&currency=ILS&intent=capture&components=buttons`;
+                s.onload = () => { paypalSdkLoaded = true; resolve(); };
+                s.onerror = reject;
+                document.head.appendChild(s);
+            });
+        }
+
+        async function ensurePayPalButtons(formValid) {
+            if (el('paymentMethod').value !== 'paypal') return;
+            if (!formValid) {
+                if (paypalButtonsInstance && el('paypalButtons')) {
+                    el('paypalButtons').innerHTML = '';
+                }
+                return;
+            }
+            await loadPayPalSdk();
+            if (!window.paypal) return;
+            const container = el('paypalButtons');
+            container.innerHTML = '';
+            paypalButtonsInstance = window.paypal.Buttons({
+                style: { layout: 'vertical', color: 'gold', shape: 'pill', label: 'paypal' },
+                createOrder: (data, actions) => {
+                    const { total } = getTotals();
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: { value: total.toFixed(2), currency_code: 'ILS' },
+                            description: 'Burger Order'
+                        }]
+                    });
+                },
+                onApprove: async (data, actions) => {
+                    try {
+                        const details = await actions.order.capture();
+                        alert('התשלום אושר! תודה והמשך יום נעים');
+                        cart = [];
+                        saveCart();
+                    } catch (e) {
+                        console.error(e);
+                        alert('שגיאה באישור התשלום');
+                    }
+                },
+                onError: (err) => {
+                    console.error(err);
+                    alert('שגיאת תשלום. נסה שוב.');
+                }
+            });
+            paypalButtonsInstance.render('#paypalButtons');
         }
 
         function initHeader() {
