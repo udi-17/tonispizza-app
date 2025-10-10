@@ -1,11 +1,11 @@
 {
-  "name": "Tony's Pizza & Pasta - הזמנות אונליין",
-  "short_name": "Tony's Pizza",
-  "description": "פיצה איכותית עם משלוח חינם מעל 60 ש״ח. כל ביס הוא חגיגה!",
+  "name": "Burger Order - הזמנת המבורגרים",
+  "short_name": "Burger Order",
+  "description": "הזמינו המבורגרים, תוספות ושתייה – משלוח או איסוף.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#667eea",
-  "theme_color": "#e74c3c",
+  "background_color": "#1f2937",
+  "theme_color": "#e67e22",
   "orientation": "portrait-primary",
   "lang": "he",
   "dir": "rtl",
@@ -59,20 +59,20 @@
       "purpose": "maskable any"
     }
   ],
-  "categories": ["food", "lifestyle", "business"],
+  "categories": ["food", "drink", "shopping"],
   "shortcuts": [
     {
       "name": "התקשר להזמנה",
       "short_name": "התקשר",
-      "description": "התקשר ישירות לפיצה טוני'ס",
-      "url": "tel:03-6008820",
+      "description": "התקשר ישירות למסעדה",
+      "url": "tel:0500000000",
       "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
     },
     {
-      "name": "מיקום",
-      "short_name": "מיקום",
-      "description": "מיקום הסניף בפתח תקווה",
-      "url": "/#location",
+      "name": "לתפריט",
+      "short_name": "תפריט",
+      "description": "פתיחה מהירה של התפריט",
+      "url": "/#menu",
       "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
     }
   ]

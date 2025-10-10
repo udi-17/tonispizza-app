@@ -1,8 +1,10 @@
-const CACHE_NAME = 'tonis-pizza-v1';
+const CACHE_NAME = 'burger-order-v1';
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/icons/icon-72x72.png',
+  '/icons/icon-96x96.png',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png'
 ];
@@ -56,7 +58,7 @@ self.addEventListener('push', (event) => {
     badge: '/icons/icon-72x72.png',
     dir: 'rtl',
     lang: 'he',
-    tag: 'pizza-notification',
+    tag: 'burger-notification',
     requireInteraction: true,
     actions: [
       {
@@ -72,7 +74,7 @@ self.addEventListener('push', (event) => {
   };
 
   event.waitUntil(
-    self.registration.showNotification('פיצה טוני\'ס', options)
+    self.registration.showNotification('Burger Order', options)
   );
 });
 
