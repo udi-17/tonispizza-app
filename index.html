@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>פיצה טוני'ס - הזמנות אונליין</title>
+    <title>Burger Order - הזמנת המבורגרים</title>
     
     <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#e74c3c">
+    <meta name="theme-color" content="#e67e22">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="פיצה טוני'ס">
-    <meta name="description" content="פיצה טוני'ס - פיצה איכותית עם משלוח חינם מעל 60 ש״ח">
+    <meta name="apple-mobile-web-app-title" content="Burger Order">
+    <meta name="description" content="הזמנת המבורגרים אונליין - טרי, מהיר וטעים">
     
     <!-- Manifest -->
     <link rel="manifest" href="manifest.json">
     
     <!-- iOS Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16x16.png">
+    <link rel="icon" type="image/png" href="icons/icon-192x192.png">
     
     <style>
         * {
@@ -30,7 +29,7 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             direction: rtl;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
             min-height: 100vh;
         }
         
@@ -50,9 +49,9 @@
         }
         
         .logo {
-            font-size: 2.5em;
+            font-size: 2.2em;
             font-weight: bold;
-            color: #f1c40f;
+            color: #e67e22;
             text-shadow: 2px 2px 4px #2c3e50;
             margin-bottom: 10px;
             font-family: Impact, 'Arial Black', sans-serif;
@@ -64,6 +63,15 @@
             margin-bottom: 20px;
         }
         
+        .header-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
         .phone {
             font-size: 1.5em;
             font-weight: bold;
@@ -72,7 +80,7 @@
         }
         
         .order-btn {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            background: linear-gradient(45deg, #e67e22, #d35400);
             color: white;
             padding: 15px 40px;
             border: none;
@@ -87,14 +95,38 @@
         
         .order-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+            box-shadow: 0 10px 20px rgba(230, 126, 34, 0.3);
         }
         
+        .chips {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .chip {
+            background: #f3f4f6;
+            color: #374151;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .chip.active, .chip:hover {
+            background: #fff;
+            border-color: #e67e22;
+            color: #111827;
+        }
+
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
-            margin-top: 30px;
+            margin-top: 20px;
         }
         
         .menu-item {
@@ -111,73 +143,69 @@
         }
         
         .menu-item h3 {
-            color: #e74c3c;
+            color: #e67e22;
             font-size: 1.5em;
             margin-bottom: 15px;
         }
-        
-        .about-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .about-section h2 {
-            color: #e74c3c;
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .about-text {
-            line-height: 1.8;
+
+        .menu-item p {
             color: #555;
-            font-size: 1.1em;
+            min-height: 48px;
+        }
+
+        .price {
+            margin: 10px 0 15px;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .btn-secondary {
+            background: #111827;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .btn-secondary:hover {
+            opacity: .9;
         }
         
-        .location-info {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .app-download {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 30px;
-            margin-top: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .download-buttons {
-            display: flex;
-            justify-content: center;
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 20px;
-            margin-top: 20px;
-            flex-wrap: wrap;
         }
-        
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            background: #000;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
+
+        .cart {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 10px;
+            height: max-content;
         }
-        
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+        .cart h3 { color: #111827; }
+        .cart .empty { color: #6b7280; text-align: center; margin: 15px 0; }
+        .cart ul { list-style: none; margin-top: 10px; }
+        .cart-item { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px dashed #e5e7eb; }
+        .qty { display: inline-flex; gap: 6px; align-items: center; }
+        .qty button { width: 28px; height: 28px; border-radius: 8px; border: none; background: #f3f4f6; font-weight: 800; cursor: pointer; }
+        .qty span { min-width: 20px; display: inline-block; text-align: center; }
+        .cart-total { font-weight: 800; display: flex; justify-content: space-between; margin: 12px 0; }
+        .checkout { display: grid; gap: 10px; margin-top: 10px; }
+        .checkout input, .checkout select, .checkout textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #e5e7eb; }
+        .checkout .submit { background: linear-gradient(45deg, #e67e22, #d35400); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 800; cursor: pointer; }
+        .checkout .submit:disabled { opacity: .6; cursor: not-allowed; }
+
+        .section-title {
+            color: #111827;
+            margin: 20px 0 10px;
+            font-size: 1.4em;
         }
         
         .install-prompt {
@@ -185,13 +213,13 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: #e74c3c;
+            background: #e67e22;
             color: white;
             padding: 15px 25px;
             border-radius: 50px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4);
             display: none;
             z-index: 1000;
         }
@@ -209,96 +237,415 @@
                 font-size: 2em;
             }
             
-            .download-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
+            .layout { grid-template-columns: 1fr; }
+            .cart { position: relative; top: 0; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="logo">Tony's Pizza & Pasta</div>
-            <div class="tagline">כל ביס הוא חגיגה</div>
-            <div class="phone">03-6008820</div>
-            <a href="tel:03-6008820" class="order-btn">התקשר להזמנה</a>
+            <div class="logo">Burger Order</div>
+            <div class="tagline">המבורגר טרי, איך שאתם אוהבים</div>
+            <div class="header-row">
+                <div class="phone" id="headerPhone">03-6008820</div>
+                <a id="callBtn" href="tel:03-6008820" class="order-btn">התקשר להזמנה</a>
+            </div>
+            <div class="chips" id="chips"></div>
         </div>
-        
-        <div class="menu-grid">
-            <div class="menu-item">
-                <h3>🍕 פיצה</h3>
-                <p>פיצה טרייה ואיכותית עם בצק שנעשה מידי יום ו-100% גבינה צהובה עמק</p>
+        <div class="layout">
+            <div>
+                <h2 id="menu" class="section-title">תפריט</h2>
+                <div id="menuGrid" class="menu-grid"></div>
             </div>
-            <div class="menu-item">
-                <h3>🥗 סלטים</h3>
-                <p>מגוון רחב של סלטים טריים לפי רצונכם</p>
-            </div>
-            <div class="menu-item">
-                <h3>🥪 טוסטים וסנדוויצ'ים</h3>
-                <p>טוסטים והרכבה אישית, קרואסונים וסנדוויצ'ים מגוונים</p>
-            </div>
-            <div class="menu-item">
-                <h3>🍝 פסטה</h3>
-                <p>מגוון מנות פסטה חמות וטעימות</p>
-            </div>
-            <div class="menu-item">
-                <h3>🥖 מאפים</h3>
-                <p>זיוות, מלוואח, בורקסים ועוד מאפים מיוחדים</p>
-            </div>
-            <div class="menu-item">
-                <h3>🍰 קינוחים</h3>
-                <p>מגוון רחב וטעים של קינוחים אישיים</p>
-            </div>
-        </div>
-        
-        <div class="about-section">
-            <h2>אודות פיצה טוני'ס</h2>
-            <div class="about-text">
-                פיצה טוניס מאז 2015, צברה מוניטין והצלחה בזכות חומרי גלם טריים ואיכותיים – 100% גבינה צהובה עמק, 
-                רוטב עשיר (שהינו מתכון סודי של הרשת), בצק טרי ואיכותי שנעשה מידי יום, ירקות טריים ומגוון רחב של 
-                תוספות לבחירתכם. הפיצה נאפת בתנור לבנים, ועל כן, השילוב כולו נותן פיצה משובחת וטעימה במיוחד.
-                <br><br>
-                <strong>משלוח חינם בהזמנה מעל 60 ש״ח</strong>
-                <br><br>
-                החזון של הרשת הוא להמשיך ולתת שירות חם ואישי לכל הלקוחות ולספק מוצרים טעימים ואיכותיים במחירים השווים לכל כיס.
-            </div>
-        </div>
-        
-        <div class="location-info">
-            <h2>📍 מיקום ושעות פעילות</h2>
-            <p><strong>כתובת:</strong> קלישר 17, פתח תקווה</p>
-            <p><strong>טלפון:</strong> 03-6008820</p>
-            <p><strong>אימייל:</strong> UDI09079@GMAIL.COM</p>
-            <br>
-            <p><strong>שעות פעילות:</strong></p>
-            <p>ראשון עד רביעי: 08:00 - 00:00</p>
-            <p>חמישי: 12:00 - 03:00</p>
-            <p>מוצאי שבת: חצי שעה אחרי צאת השבת עד 03:00</p>
-        </div>
-        
-        <div class="app-download">
-            <h2>📱 הורד את האפליקציה</h2>
-            <p>קבל חוויית הזמנה משופרת עם האפליקציה שלנו!</p>
-            <div class="download-buttons">
-                <a href="https://play.google.com/store" class="download-btn" target="_blank">
-                    📱 הורד מ-Google Play
-                </a>
-                <a href="https://apps.apple.com" class="download-btn" target="_blank">
-                    🍎 הורד מ-App Store
-                </a>
-            </div>
-            <p style="margin-top: 15px; font-size: 0.9em; color: #666;">
-                או פשוט הוסף את האתר למסך הבית שלך לגישה מהירה!
-            </p>
+            <aside class="cart">
+                <h3>🧺 העגלה שלי</h3>
+                <div id="emptyCart" class="empty">העגלה ריקה</div>
+                <ul id="cartList"></ul>
+                <div class="cart-total"><span>סכום ביניים</span><span id="subtotal">₪0</span></div>
+                <div class="cart-total"><span>דמי משלוח</span><span id="deliveryFee">₪0</span></div>
+                <div class="cart-total" style="border-top:1px solid #e5e7eb;padding-top:8px"><span>סה"כ</span><span id="grandTotal">₪0</span></div>
+                <div class="checkout">
+                    <select id="fulfillment">
+                        <option value="delivery">משלוח</option>
+                        <option value="pickup">איסוף עצמי</option>
+                    </select>
+                    <input id="customerName" type="text" placeholder="שם מלא" />
+                    <input id="customerPhone" type="tel" placeholder="טלפון" />
+                    <input id="customerAddress" type="text" placeholder="כתובת למשלוח" />
+                    <textarea id="orderNotes" rows="2" placeholder="הערות להזמנה (לא חובה)"></textarea>
+                    <button id="placeOrder" class="submit" disabled>שלח הזמנה בווטסאפ</button>
+                </div>
+            </aside>
         </div>
     </div>
     
+    <!-- Customizer Modal -->
+    <div id="customizer" style="position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:1001;">
+        <div style="background:#fff;max-width:520px;width:92%;border-radius:16px;padding:20px;max-height:90vh;overflow:auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <h3 id="customizerTitle" style="color:#111827">התאמת המנה</h3>
+                <button id="closeCustomizer" class="btn-secondary" aria-label="סגירה">סגירה</button>
+            </div>
+            <div id="customizerBody"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px;flex-wrap:wrap;">
+                <div style="font-weight:800;color:#111827">מחיר: <span id="customizerPrice">₪0</span></div>
+                <div style="display:flex;gap:8px;">
+                    <button id="customizerAdd" class="order-btn">הוסף לעגלה</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="installPrompt" class="install-prompt">
         📱 הוסף למסך הבית
     </div>
     
     <script>
+        // ====== CONFIG ======
+        const RESTAURANT = {
+            tel: '03-6008820', // עדכן לפי הצורך
+            whatsappInternational: '972500000000' // עדכן למספר עם קידומת 972 וללא מקפים/רווחים
+        };
+
+        // ====== MENU DATA ======
+        const CATEGORIES = [
+          { id: 'burgers', label: '🍔 המבורגרים' },
+          { id: 'sides', label: '🍟 תוספות' },
+          { id: 'drinks', label: '🥤 שתייה' },
+          { id: 'combos', label: '🎉 קומבואים' },
+        ];
+
+        const MENU = {
+          burgers: [
+            { id: 'classic150', name: 'קלאסי 150ג׳', price: 39, customizable: true, desc: 'קציצה 150ג׳, חסה, עגבניה, בצל, חמוצים' },
+            { id: 'classic250', name: 'קלאסי 250ג׳', price: 49, customizable: true, desc: 'קציצה 250ג׳, חסה, עגבניה, בצל, חמוצים' },
+            { id: 'cheese150', name: 'צ׳יזבורגר 150ג׳', price: 45, customizable: true, desc: 'עם גבינה צהובה' },
+            { id: 'vegan', name: 'וגי בורגר', price: 44, customizable: true, desc: 'קציצה מהצומח' },
+          ],
+          sides: [
+            { id: 'fries', name: 'צ׳יפס', price: 18, desc: 'פריך ושחום' },
+            { id: 'sweetfries', name: 'צ׳יפס בטטה', price: 22, desc: 'מתוק וממכר' },
+            { id: 'onionrings', name: 'טבעות בצל', price: 22, desc: 'פריכות' },
+          ],
+          drinks: [
+            { id: 'cola330', name: 'קולה 330 מ״ל', price: 9 },
+            { id: 'cola15', name: 'קולה 1.5 ל׳', price: 15 },
+            { id: 'water', name: 'מים מינרליים', price: 8 },
+          ],
+          combos: [
+            { id: 'classicMeal', name: 'ארוחה קלאסית', price: 59, desc: 'בורגר 150ג׳ + צ׳יפס + שתייה' },
+          ],
+        };
+
+        // ====== CUSTOMIZATION & PRICING ======
+        const DEFAULT_TOPPINGS = ['חסה', 'עגבניה', 'בצל', 'מלפפון חמוץ'];
+        const ALL_TOPPINGS = ['חסה', 'עגבניה', 'בצל', 'מלפפון חמוץ', 'ג׳לפנו', 'פטריות', 'מלפפון טרי'];
+        const SAUCES = ['קטשופ', 'מיונז', 'חרדל', 'ברביקיו', 'איולי']
+        const PRICES = {
+            specialBun: 4,
+            cheese: 6,
+            bacon: 8,
+            extraPatty: 20,
+            freeToppings: 4,
+            extraTopping: 2,
+            deliveryFee: 12,
+            freeDeliveryAbove: 120
+        };
+
+        // ====== STATE ======
+        let cart = JSON.parse(localStorage.getItem('burger_order_cart_v1') || '[]');
+        const el = (id) => document.getElementById(id);
+
+        const formatCurrency = (n) => `₪${n.toFixed(0)}`;
+
+        const saveCart = () => {
+            localStorage.setItem('burger_order_cart_v1', JSON.stringify(cart));
+            renderCart();
+        };
+
+        function computeCustomPrice(basePrice, opts) {
+            let price = basePrice;
+            if (opts.bun === 'brioche') price += PRICES.specialBun;
+            if (opts.cheese && opts.cheese !== 'none') price += PRICES.cheese;
+            if (opts.extras?.includes('בייקון')) price += PRICES.bacon;
+            if (opts.extras?.includes('קציצה נוספת')) price += PRICES.extraPatty;
+            const extraToppings = Math.max(0, (opts.toppings?.length || 0) - PRICES.freeToppings);
+            price += extraToppings * PRICES.extraTopping;
+            return price;
+        }
+
+        function renderChips() {
+            const chips = el('chips');
+            chips.innerHTML = '';
+            CATEGORIES.forEach((c, idx) => {
+                const b = document.createElement('button');
+                b.className = 'chip' + (idx === 0 ? ' active' : '');
+                b.textContent = c.label;
+                b.onclick = () => {
+                    document.querySelectorAll('.chip').forEach(ch => ch.classList.remove('active'));
+                    b.classList.add('active');
+                    document.querySelectorAll('[data-category]').forEach(sec => sec.style.display = sec.dataset.category === c.id ? '' : 'none');
+                };
+                chips.appendChild(b);
+            });
+        }
+
+        function renderMenu() {
+            const grid = el('menuGrid');
+            grid.innerHTML = '';
+            Object.entries(MENU).forEach(([cat, items]) => {
+                const section = document.createElement('div');
+                section.dataset.category = cat;
+                const title = document.createElement('h3');
+                title.className = 'section-title';
+                title.textContent = CATEGORIES.find(c => c.id === cat)?.label || '';
+                section.appendChild(title);
+
+                const inner = document.createElement('div');
+                inner.className = 'menu-grid';
+
+                items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'menu-item';
+                    card.innerHTML = `
+                        <h3>${item.name}</h3>
+                        ${item.desc ? `<p>${item.desc}</p>` : '<p></p>'}
+                        <div class="price">${formatCurrency(item.price)}</div>
+                        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                            ${item.customizable ? `<button class="order-btn" data-id="${item.id}">התאמה והוספה</button>` : ''}
+                            ${!item.customizable ? `<button class="btn-secondary" data-add-id="${item.id}">הוסף</button>` : ''}
+                        </div>
+                    `;
+                    inner.appendChild(card);
+                });
+
+                section.appendChild(inner);
+                grid.appendChild(section);
+            });
+
+            // attach handlers
+            grid.querySelectorAll('button[data-id]').forEach(btn => {
+                btn.addEventListener('click', () => openCustomizer(btn.getAttribute('data-id')));
+            });
+            grid.querySelectorAll('button[data-add-id]').forEach(btn => {
+                btn.addEventListener('click', () => addNonCustomItem(btn.getAttribute('data-add-id')));
+            });
+
+            // default filter
+            document.querySelectorAll('[data-category]').forEach((sec, idx) => sec.style.display = idx === 0 ? '' : 'none');
+        }
+
+        function addNonCustomItem(id) {
+            const item = Object.values(MENU).flat().find(x => x.id === id);
+            if (!item) return;
+            const cartItem = {
+                id: id + '-' + Date.now(),
+                name: item.name,
+                unitPrice: item.price,
+                quantity: 1,
+                details: null
+            };
+            cart.push(cartItem);
+            saveCart();
+        }
+
+        function openCustomizer(id) {
+            const item = MENU.burgers.find(x => x.id === id);
+            if (!item) return;
+            const modal = el('customizer');
+            el('customizerTitle').textContent = `התאמת ${item.name}`;
+
+            const state = {
+                bun: 'regular',
+                cheese: 'none',
+                patty: item.id.includes('250') ? '250' : '150',
+                doneness: 'medium',
+                toppings: [...DEFAULT_TOPPINGS],
+                sauces: ['קטשופ'],
+                extras: []
+            };
+
+            const body = el('customizerBody');
+            body.innerHTML = `
+              <div style="display:grid;gap:12px;">
+                <label>לחמניה
+                  <select id="cz_bun">
+                    <option value="regular">רגילה</option>
+                    <option value="brioche">בריוש (+${PRICES.specialBun})</option>
+                  </select>
+                </label>
+                <label>מידת עשייה
+                  <select id="cz_done">
+                    <option value="rare">נדירה</option>
+                    <option value="medium" selected>בינונית</option>
+                    <option value="well">עשויה היטב</option>
+                  </select>
+                </label>
+                <label>גבינה
+                  <select id="cz_cheese">
+                    <option value="none">ללא</option>
+                    <option value="yellow">צהובה (+${PRICES.cheese})</option>
+                    <option value="cheddar">צ׳דר (+${PRICES.cheese})</option>
+                  </select>
+                </label>
+                <div>
+                  <div style="font-weight:700;margin-bottom:6px;">תוספות</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                    ${ALL_TOPPINGS.map(t => `<label style='display:flex;gap:6px;align-items:center;'><input type='checkbox' value='${t}' ${DEFAULT_TOPPINGS.includes(t)?'checked':''}/> ${t}</label>`).join('')}
+                  </div>
+                  <div style="color:#6b7280;font-size:.9em;margin-top:4px;">${PRICES.freeToppings} תוספות ללא עלות, לאחר מכן ${PRICES.extraTopping} ש"ח לכל תוספת</div>
+                </div>
+                <div>
+                  <div style="font-weight:700;margin-bottom:6px;">רטבים</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                    ${SAUCES.map(s => `<label style='display:flex;gap:6px;align-items:center;'><input type='checkbox' value='${s}' ${s==='קטשופ'?'checked':''}/> ${s}</label>`).join('')}
+                  </div>
+                </div>
+                <div>
+                  <div style="font-weight:700;margin-bottom:6px;">אקסטרות</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                    <label style='display:flex;gap:6px;align-items:center;'><input type='checkbox' value='בייקון'/> בייקון (+${PRICES.bacon})</label>
+                    <label style='display:flex;gap:6px;align-items:center;'><input type='checkbox' value='קציצה נוספת'/> קציצה נוספת (+${PRICES.extraPatty})</label>
+                  </div>
+                </div>
+              </div>
+            `;
+
+            function recalc() {
+                const selectedToppings = Array.from(body.querySelectorAll("div:nth-of-type(2) input[type='checkbox']")).filter(x => x.checked).map(x => x.value);
+                const selectedSauces = Array.from(body.querySelectorAll("div:nth-of-type(3) input[type='checkbox']")).filter(x => x.checked).map(x => x.value);
+                const selectedExtras = Array.from(body.querySelectorAll("div:nth-of-type(4) input[type='checkbox']")).filter(x => x.checked).map(x => x.value);
+                state.bun = body.querySelector('#cz_bun').value;
+                state.doneness = body.querySelector('#cz_done').value;
+                state.cheese = body.querySelector('#cz_cheese').value;
+                state.toppings = selectedToppings;
+                state.sauces = selectedSauces;
+                state.extras = selectedExtras;
+                el('customizerPrice').textContent = formatCurrency(computeCustomPrice(item.price, state));
+            }
+
+            body.addEventListener('change', recalc);
+            recalc();
+
+            el('customizerAdd').onclick = () => {
+                const unitPrice = computeCustomPrice(item.price, state);
+                cart.push({
+                    id: item.id + '-' + Date.now(),
+                    name: item.name,
+                    unitPrice,
+                    quantity: 1,
+                    details: state
+                });
+                saveCart();
+                closeCustomizer();
+            };
+
+            function closeCustomizer(){ modal.style.display = 'none'; }
+            el('closeCustomizer').onclick = closeCustomizer;
+            modal.style.display = 'flex';
+        }
+
+        function renderCart() {
+            const list = el('cartList');
+            const empty = el('emptyCart');
+            list.innerHTML = '';
+
+            if (cart.length === 0) {
+                empty.style.display = '';
+            } else {
+                empty.style.display = 'none';
+            }
+
+            let subtotal = 0;
+            cart.forEach((ci, idx) => {
+                subtotal += ci.unitPrice * ci.quantity;
+                const li = document.createElement('li');
+                li.className = 'cart-item';
+                const details = ci.details ? `<div style='color:#6b7280;font-size:.9em;'>${[ci.details.bun==='brioche'?'בריוש':null, ci.details.cheese!=='none'?('גבינה '+ci.details.cheese):null, ...(ci.details.toppings||[]), ...(ci.details.sauces||[]), ...(ci.details.extras||[])].filter(Boolean).join(' · ')}</div>` : '';
+                li.innerHTML = `
+                    <div>
+                      <div style='font-weight:700;color:#111827'>${ci.name}</div>
+                      ${details}
+                    </div>
+                    <div class='qty'>
+                        <button aria-label='הפחת' data-dec='${idx}'>-</button>
+                        <span>${ci.quantity}</span>
+                        <button aria-label='הוסף' data-inc='${idx}'>+</button>
+                    </div>
+                    <div style='text-align:end;'>
+                      <div style='font-weight:800'>${formatCurrency(ci.unitPrice * ci.quantity)}</div>
+                      <button class='btn-secondary' data-del='${idx}' style='margin-top:6px;'>הסר</button>
+                    </div>
+                `;
+                list.appendChild(li);
+            });
+
+            const delivery = (el('fulfillment').value === 'delivery' && subtotal > 0 && subtotal < PRICES.freeDeliveryAbove) ? PRICES.deliveryFee : 0;
+            el('subtotal').textContent = formatCurrency(subtotal);
+            el('deliveryFee').textContent = formatCurrency(delivery);
+            el('grandTotal').textContent = formatCurrency(subtotal + delivery);
+
+            list.querySelectorAll('button[data-inc]').forEach(b => b.onclick = () => { cart[b.getAttribute('data-inc')].quantity++; saveCart(); });
+            list.querySelectorAll('button[data-dec]').forEach(b => b.onclick = () => { const i = b.getAttribute('data-dec'); cart[i].quantity = Math.max(1, cart[i].quantity - 1); saveCart(); });
+            list.querySelectorAll('button[data-del]').forEach(b => b.onclick = () => { cart.splice(b.getAttribute('data-del'), 1); saveCart(); });
+
+            // enable/disable order button
+            el('placeOrder').disabled = cart.length === 0 || !el('customerName').value || !el('customerPhone').value || (el('fulfillment').value==='delivery' && !el('customerAddress').value);
+        }
+
+        function buildOrderText() {
+            let text = 'הזמנה חדשה - Burger Order\n';
+            text += '------------------------\n';
+            cart.forEach(ci => {
+                text += `• ${ci.name} x${ci.quantity} - ${formatCurrency(ci.unitPrice * ci.quantity)}\n`;
+                if (ci.details) {
+                    const parts = [];
+                    if (ci.details.bun==='brioche') parts.push('לחמניית בריוש');
+                    if (ci.details.cheese && ci.details.cheese!=='none') parts.push('גבינה: '+ci.details.cheese);
+                    if (ci.details.toppings?.length) parts.push('תוספות: '+ci.details.toppings.join(', '));
+                    if (ci.details.sauces?.length) parts.push('רטבים: '+ci.details.sauces.join(', '));
+                    if (ci.details.extras?.length) parts.push('אקסטרות: '+ci.details.extras.join(', '));
+                    if (parts.length) text += parts.join(' | ') + '\n';
+                }
+            });
+            text += '------------------------\n';
+            text += `סכום לתשלום: ${el('grandTotal').textContent}\n`;
+            text += `שם: ${el('customerName').value}\n`;
+            text += `טלפון: ${el('customerPhone').value}\n`;
+            const fulfillment = el('fulfillment').value === 'delivery' ? 'משלוח' : 'איסוף עצמי';
+            text += `שיטת אספקה: ${fulfillment}\n`;
+            if (el('fulfillment').value==='delivery') text += `כתובת: ${el('customerAddress').value}\n`;
+            if (el('orderNotes').value) text += `הערות: ${el('orderNotes').value}\n`;
+            return text;
+        }
+
+        function initCheckout() {
+            el('fulfillment').addEventListener('change', () => {
+                const isDelivery = el('fulfillment').value === 'delivery';
+                el('customerAddress').disabled = !isDelivery;
+                renderCart();
+            });
+            ['customerName','customerPhone','customerAddress'].forEach(id => el(id).addEventListener('input', renderCart));
+            el('placeOrder').addEventListener('click', () => {
+                const text = buildOrderText();
+                const url = `https://wa.me/${RESTAURANT.whatsappInternational}?text=${encodeURIComponent(text)}`;
+                window.open(url, '_blank');
+            });
+        }
+
+        function initHeader() {
+            el('headerPhone').textContent = RESTAURANT.tel;
+            el('callBtn').href = `tel:${RESTAURANT.tel}`;
+        }
+
+        // ====== INIT ======
+        renderChips();
+        renderMenu();
+        initCheckout();
+        initHeader();
+        renderCart();
+
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
