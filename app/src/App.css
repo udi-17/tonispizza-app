@@ -1,0 +1,4 @@
+.kiosk button { transition: transform .1s ease; }
+.kiosk button:active { transform: scale(.98); }
+
+/* Optional kiosk fonts/colors could be added here */
