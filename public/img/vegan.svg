@@ -1,0 +1,8 @@
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="300" height="200" fill="#FFD700"/>
+<rect x="50" y="50" width="200" height="100" rx="10" fill="#8B4513"/>
+<rect x="60" y="60" width="180" height="20" fill="#228B22"/>
+<rect x="60" y="90" width="180" height="20" fill="#32CD32"/>
+<rect x="60" y="120" width="180" height="20" fill="#90EE90"/>
+<text x="150" y="180" text-anchor="middle" fill="#000" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Vegan King</text>
+</svg>

@@ -1,0 +1,9 @@
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="300" height="200" fill="#FFD700"/>
+<rect x="120" y="60" width="15" height="80" fill="#FFD700"/>
+<rect x="140" y="50" width="15" height="90" fill="#FFD700"/>
+<rect x="160" y="70" width="15" height="70" fill="#FFD700"/>
+<rect x="180" y="55" width="15" height="85" fill="#FFD700"/>
+<rect x="100" y="75" width="15" height="65" fill="#FFD700"/>
+<text x="150" y="180" text-anchor="middle" fill="#000" font-family="Arial, sans-serif" font-size="16" font-weight="bold">צ'יפס קלאסי</text>
+</svg>
