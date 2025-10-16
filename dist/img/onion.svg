@@ -1,0 +1,7 @@
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="300" height="200" fill="#FFD700"/>
+<circle cx="100" cy="100" r="25" fill="#FFD700" stroke="#DAA520" stroke-width="3"/>
+<circle cx="150" cy="100" r="25" fill="#FFD700" stroke="#DAA520" stroke-width="3"/>
+<circle cx="200" cy="100" r="25" fill="#FFD700" stroke="#DAA520" stroke-width="3"/>
+<text x="150" y="180" text-anchor="middle" fill="#000" font-family="Arial, sans-serif" font-size="16" font-weight="bold">טבעות בצל</text>
+</svg>

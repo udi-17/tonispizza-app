@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for the kiosk */
+.kiosk {
+  font-family: 'Arial', sans-serif;
+}
+
+/* Smooth transitions for better UX */
+.transition {
+  transition: all 0.3s ease;
+}
+
+/* Hover effects */
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+/* RTL support for Hebrew text */
+[dir="rtl"] {
+  text-align: right;
+}
+
+/* Custom button styles */
+button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Cart item styling */
+.cart-item {
+  border-bottom: 1px solid #374151;
+  padding: 0.5rem 0;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .kiosk {
+    flex-direction: column;
+  }
+  
+  .menu {
+    width: 100% !important;
+  }
+  
+  .cart {
+    width: 100% !important;
+  }
+  
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+}
