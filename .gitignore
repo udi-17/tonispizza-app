@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Environments
+.env
+.venv/
+venv/
+
+# Data and exports
+data/
+exports/
+
+# Misc
+*.sqlite
+*.db

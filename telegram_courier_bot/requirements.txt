@@ -1,0 +1,4 @@
+python-telegram-bot>=21,<22
+SQLAlchemy>=2.0
+python-dotenv>=1.0
+tzdata>=2024.1
